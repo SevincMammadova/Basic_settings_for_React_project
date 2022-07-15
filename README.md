@@ -3,6 +3,5 @@
 * Webpack
 * Eslint
 * tsconfig
-* gulp
 * linter
 * husky
