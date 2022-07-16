@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: path.resolve(__dirname, './src/index.js'),
@@ -29,19 +32,21 @@ module.exports = {
             /** CSS */
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+                    'css-loader'],
                 // npm i style-loader css-loader -D
             },
-            /** SCSS/SAAS */
+            /** LESS */
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.less$/i,
                 use: [
                     // Creates `style` nodes from JS strings
-                    "style-loader",
+                    isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
                     // Translates CSS into CommonJS
                     "css-loader",
                     // Compiles Sass to CSS
-                    "sass-loader",
+                    "less-loader",
                 ],
                 // npm i style-loader css-loader sass sass-loader -D
             },
@@ -72,7 +77,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx'],
       },
-    plugins: [
+    plugins: isProduction ? [new MiniCssExtractPlugin()] : [
         new HtmlWebpackPlugin({
             title: 'Basic settings for React project',
             template:  './src/index.html'
