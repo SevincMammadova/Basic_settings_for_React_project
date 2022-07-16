@@ -1,7 +1,7 @@
 # configuration_files-
 
-* Webpack
-* Eslint
-* tsconfig
-* linter
-* husky
+- Webpack
+- Eslint
+- tsconfig
+- linter
+- husky
